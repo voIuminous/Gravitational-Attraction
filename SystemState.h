@@ -32,7 +32,7 @@ public:
 
 private:
 	// PRIVATE VARIABLES
-	std::unique_ptr<sf::RenderWindow> window; // pointer because we want to be able to delete it when we want so we dynamically allocate it.
+	std::unique_ptr<sf::RenderWindow> window;
 	sf::VideoMode videoMode;
 	sf::Event ev;
 
