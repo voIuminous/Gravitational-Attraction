@@ -66,26 +66,23 @@ void PlanetaryHandler::applyGravity()
 		{
 			if (i != j)
 			{
-				double distanceBetweenX = pow(planets[j].getPosition().x - planets[i].getPosition().x, 1);
-				double distanceBetweenY = pow(planets[j].getPosition().y - planets[i].getPosition().y, 1);
+				double distanceBetweenX = planets[j].getPosition().x - planets[i].getPosition().x;
+				double distanceBetweenY = planets[j].getPosition().y - planets[i].getPosition().y;
 
 				double distanceBetween = sqrt(pow(distanceBetweenX, 2) + pow(distanceBetweenY, 2));
 
 				double angle = 180 * atan(distanceBetweenY / distanceBetweenX) / 3.14159265359;
-
-				double m1 = pow(planets[i].getRadius(), 1);
-				double m2 = pow(planets[j].getRadius(), 1);
 
 				double F = (G * m_mass[i] * m_mass[j]) / pow(distanceBetween, 2);
 
 				// if the value gets below 1 or -1 (ex: 0.05) the force will act really weird
 				if (distanceBetweenX >= 1 || distanceBetweenX <= -1)
 				{
-					this->accelerations[i].x = (m_mass[j] / m_mass[i] * F * distanceBetweenX) * 8;
+					this->accelerations[i].x = m_mass[j] / m_mass[i] * F * distanceBetweenX;
 				}
 				if (distanceBetweenY >= 1 || distanceBetweenY <= -1)
 				{
-					this->accelerations[i].y = (m_mass[j] / m_mass[i] * F * distanceBetweenY) * 8;
+					this->accelerations[i].y = m_mass[j] / m_mass[i] * F * distanceBetweenY;
 				}
 
 				velocities[i].x += accelerations[i].x;
@@ -95,8 +92,8 @@ void PlanetaryHandler::applyGravity()
 				// std::cout << accelerations[i].x << "             " << accelerations[i].y << std::endl;
 
 				sf::CircleShape pathObj;
-				pathObj.setFillColor(sf::Color(255, 255, 255, 10));
-				pathObj.setRadius(planets[i].getRadius());
+				pathObj.setFillColor(sf::Color(255, 255, 255));
+				pathObj.setRadius(5);
 				pathObj.setOrigin(pathObj.getRadius(), pathObj.getRadius());
 				pathObj.setPosition(planets[i].getPosition().x, planets[i].getPosition().y);
 
@@ -122,11 +119,10 @@ void PlanetaryHandler::renderPath(sf::RenderWindow& window)
 	for (int i = 0; i < path.size(); i++)
 	{
 		counter++;
-		if (counter % 20 == 0)
+		if (counter % 10 == 0)
 		{
 			window.draw(this->path[i]);
 
 		}
 	}
 }
-
